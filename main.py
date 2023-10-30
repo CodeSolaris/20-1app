@@ -1,54 +1,47 @@
 def main():
-    user_prompt = 'Enter your action: add, show, edit, complete or exit: '
-    actions = {
-        'add': add_todo,
-        'show': show_todos,
-        'display': show_todos,
-        'exit': exit,
-        'edit': edit_todo,
-        'complete': complete_todo
-    }
+    prompt = "Enter your action: add, show, edit, complete or exit: "
 
     while True:
-        user_action = input(user_prompt).strip().lower()
-        prompt = user_action.split()[0]
-        action = actions.get(prompt)
-        if prompt in ('show', 'display', 'edit', 'exit'):
-            action()
+        action = input(prompt).strip().lower()
+
+        if action.startswith('add'):
+            todo = action.replace('add', '').strip()
+
+            todos = read_todos()
+            todos.append(todo.capitalize() + '\n')
+
+            write_todos(todos)
+
+        elif action.startswith(('show', 'display')):
+            todos = read_todos()
+
+            for index, item in enumerate(todos):
+                print(f'{index + 1}. {item.strip()}')
+
+        elif action.startswith('exit'):
+            break
+
+        elif action.startswith('edit'):
+            todos = read_todos()
+
+            number = int(input('Enter number of the todo to edit: ')) - 1
+            todos[number] = input('Enter new todo: ') + '\n'
+
+            write_todos(todos)
+
+        elif action.startswith('complete'):
+            number = int(action.replace('complete', '').strip())
+
+            todos = read_todos()
+            index = number - 1
+            completed_todo = todos.pop(index).strip()
+            message = f'The todo: "{completed_todo}" was completed.'
+            print(message)
+
+            write_todos(todos)
+
         else:
-            action(user_action)
-
-
-def complete_todo(user_action):
-    number = int(user_action
-                 .replace('complete', '')
-                 .strip())
-    todos = read_todos()
-    index = number - 1
-    completed_todo = todos.pop(index).strip()
-    message = f'The todo: "{completed_todo}" was completed.'
-    print(message)
-    write_todos(todos)
-
-
-def edit_todo():
-    todos = read_todos()
-    number = int(input('Enter number of the todo to edit: ')) - 1
-    todos[number] = input('Enter new todo: ') + '\n'
-    write_todos(todos)
-
-
-def show_todos():
-    todos = read_todos()
-    for index, item in enumerate(todos):
-        print(f'{index + 1}. {item.strip()}')
-
-
-def add_todo(user_action):
-    todo = user_action.replace('add', '').strip()
-    todos = read_todos()
-    todos.append(todo.capitalize() + '\n')
-    write_todos(todos)
+            print("Hey, you entered an unknown command.")
 
 
 def write_todos(todos):
