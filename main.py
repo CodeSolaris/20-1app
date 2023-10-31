@@ -22,23 +22,42 @@ def main():
             break
 
         elif action.startswith('edit'):
-            todos = read_todos()
+            try: 
+                if action == 'edit':
+                    number = int(
+                        input('Please, enter a position to edit (must be a number): ')
+                        ) - 1
+                else:   
+                    number = int(action.replace('edit', '').strip()) - 1
+                todos = read_todos()
 
-            number = int(input('Enter number of the todo to edit: ')) - 1
-            todos[number] = input('Enter new todo: ') + '\n'
+                new_todo = input('Enter new todo: ') + '\n'
+                todos[number] = new_todo
 
-            write_todos(todos)
+                write_todos(todos)
+            except ValueError:
+                print('Please, enter a valid number.')
+                continue
 
         elif action.startswith('complete'):
-            number = int(action.replace('complete', '').strip())
+            try:
+                if action == 'complete':
+                    number = int(
+                        input('Please, enter a position to complete (must be a number): ')
+                        ) - 1
+                else:   
+                    number = int(action.replace('complete', '').strip()) - 1
+                todos = read_todos()
 
-            todos = read_todos()
-            index = number - 1
-            completed_todo = todos.pop(index).strip()
-            message = f'The todo: "{completed_todo}" was completed.'
-            print(message)
+                completed_todo = todos.pop(number).strip()
+                message = f'The todo: "{completed_todo}" was completed.'
+                print(message)
 
-            write_todos(todos)
+                write_todos(todos)
+                
+            except IndexError:
+                print('there is no todo at this position.')
+                continue
 
         else:
             print("Hey, you entered an unknown command.")
