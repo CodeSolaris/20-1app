@@ -1,3 +1,6 @@
+from functions import get_position, read_todos, write_todos
+
+
 def main():
     prompt = "Enter your action: add, show, edit, complete or exit: "
 
@@ -51,25 +54,6 @@ def main():
 
         else:
             print("Hey, you entered an unknown command.")
-
-
-def get_position(action, prompt):
-    if action == "edit" or action == "complete":
-        number = int(input(prompt)) - 1
-    else:
-        number = int(action.replace("edit", "").replace("complete", "").strip()) - 1
-    return number
-
-
-def write_todos(todos):
-    with open("todos.txt", "w") as file:
-        file.writelines(todos)
-
-
-def read_todos():
-    with open("todos.txt", "r") as file:
-        todos = file.readlines()
-    return todos
 
 
 if __name__ == "__main__":
