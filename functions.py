@@ -1,3 +1,5 @@
+FILEPATH = "todos.txt"
+
 def get_position(action: str, prompt: str) -> int:
     """
     Get the position of an action based on user input.
@@ -16,26 +18,26 @@ def get_position(action: str, prompt: str) -> int:
     return number
 
 
-def write_todos(todos: list[str], file_path: str = "todos.txt") -> None:
+def write_todos(todos: list[str], file_path: str = FILEPATH) -> None:
     """
     Write todos to a file.
 
     Args:
         todos (List[str]): The list of todos.
         file_path (str, optional): The file path to write todos to.
-        Defaults to "todos.txt".
+        Defaults to FILEPATH.
     """
     with open(file_path, "w") as file:
         file.writelines(todos)
 
 
-def read_todos(file_path: str = "todos.txt") -> list[str]:
+def read_todos(file_path: str = FILEPATH) -> list[str]:
     """
     Read todos from a file.
 
     Args:
         file_path (str, optional): The file path to read todos from.
-        Defaults to "todos.txt".
+        Defaults to FILEPATH.
 
     Returns:
         List[str]: The list of todos.
