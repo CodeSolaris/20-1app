@@ -4,6 +4,7 @@ from time import strftime
 now = strftime("%B %Y %H:%M:%S")
 print("It's", now)
 
+
 def main():
     prompt = "Enter your action: add, show, edit, complete or exit: "
 

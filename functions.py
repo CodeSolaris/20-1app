@@ -1,5 +1,6 @@
 FILEPATH = "todos.txt"
 
+
 def get_position(action: str, prompt: str) -> int:
     """
     Get the position of an action based on user input.
