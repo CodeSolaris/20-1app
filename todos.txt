@@ -1,9 +1,7 @@
 New edited todo
 To do 4 edited
-Hi there
-stop
 clean the room
 new todo
 Do edit botton
-edited todoDo complete botton
 new todo
+Some new todos
