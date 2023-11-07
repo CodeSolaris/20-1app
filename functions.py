@@ -1,13 +1,28 @@
-def get_position(action: str, prompt: str) -> int:
+FILEPATH: str = "todos.txt"
+
+
+def window_update(todo_list: list, window: object) -> None:
     """
-    Get the position of an action based on user input.
+    Update the todo_list in the window with the given values.
 
     Args:
-        action (str): The action to perform.
-        prompt (str): The prompt message to display.
+        todo_list: The list of todos.
+        window: The window object to update.
+    """
+    window["todo_list"].update(values=todo_list)
+    window["todo"].update(value="")
+
+
+def get_position(action: str, prompt: str) -> int:
+    """
+    Get the position based on the given action and prompt.
+
+    Args:
+        action: The action to perform.
+        prompt: The prompt to display.
 
     Returns:
-        int: The position of the action.
+        The position.
     """
     if action == "edit" or action == "complete":
         number = int(input(prompt)) - 1
@@ -16,90 +31,92 @@ def get_position(action: str, prompt: str) -> int:
     return number
 
 
-def write_todos(todos: list[str], file_path: str = "todos.txt") -> None:
+def write_todo_list(todo_list: list, file_path: str = FILEPATH) -> None:
     """
-    Write todos to a file.
+    Write the todo_list to the file with the given file_path.
 
     Args:
-        todos (List[str]): The list of todos.
-        file_path (str, optional): The file path to write todos to.
-        Defaults to "todos.txt".
+        todo_list: The list of todos.
+        file_path: The file path to write to.
     """
     with open(file_path, "w") as file:
-        file.writelines(todos)
+        file.writelines(todo_list)
 
 
-def read_todos(file_path: str = "todos.txt") -> list[str]:
+def get_todo_list(file_path: str = FILEPATH) -> list:
     """
-    Read todos from a file.
+    Get the todo_list from the file with the given file_path.
 
     Args:
-        file_path (str, optional): The file path to read todos from.
-        Defaults to "todos.txt".
+        file_path: The file path to read from.
 
     Returns:
-        List[str]: The list of todos.
+        The list of todos.
     """
     with open(file_path, "r") as file:
-        todos = file.readlines()
-    return todos
+        todo_list = file.readlines()
+    return todo_list
 
 
-def add_todo(todo):
+def add_todo(todo: str, file_path: str = FILEPATH) -> None:
     """
-    Add a todo to the list.
+    Add a todo to the todo_list.
 
     Args:
-        todo (str): The todo to add.
+        todo: The todo to add.
+        file_path: The file path to write to.
     """
-    todos = read_todos()
-    todos.append(todo.capitalize() + "\n")
-    write_todos(todos)
+    if todo:
+        todo_list = get_todo_list(file_path)
+        todo = todo.capitalize() + "\n"
+        if todo not in todo_list:
+            todo_list.append(todo)
+        write_todo_list(todo_list, file_path)
 
 
-def display_todos():
+def display_todo_list() -> None:
     """
-    Display the list of todos.
+    Display the todos in the todo_list.
     """
-    todos = read_todos()
-    for index, item in enumerate(todos):
+    todo_list = get_todo_list()
+    for index, item in enumerate(todo_list):
         print(f"{index + 1}. {item.strip()}")
 
 
-def edit_todo(action):
+def edit_todo(action: str) -> None:
     """
-    Edit a todo in the list.
+    Edit a todo based on the given action.
 
     Args:
-        action (str): The action to perform.
+        action: The action to perform.
     """
     number = get_position(
         action, "Please, enter a position to edit (must be a number): "
     )
     try:
-        todos = read_todos()
+        todo_list = get_todo_list()
         new_todo = input("Enter a new todo: ")
-        todos[number] = new_todo.capitalize() + "\n"
-        write_todos(todos)
+        todo_list[number] = new_todo.capitalize() + "\n"
+        write_todo_list(todo_list)
     except ValueError:
         print("Please, enter a valid number.")
 
 
-def complete_todo(action):
+def complete_todo(action: str) -> None:
     """
-    Complete a todo in the list.
+    Complete a todo based on the given action.
 
     Args:
-        action (str): The action to perform.
+        action: The action to perform.
     """
     number = get_position(
         action, "Please, enter a position to complete (must be a number): "
     )
     try:
-        todos = read_todos()
-        todo_to_complete = todos.pop(number).strip()
+        todo_list = get_todo_list()
+        todo_to_complete = todo_list.pop(number).strip()
         message = f"You have completed {todo_to_complete}"
         print(message)
-        write_todos(todos)
+        write_todo_list(todo_list)
     except IndexError:
         print("Please, enter a valid position.")

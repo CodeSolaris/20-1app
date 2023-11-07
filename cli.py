@@ -1,4 +1,9 @@
-from functions import add_todo, complete_todo, display_todos, edit_todo
+from time import strftime
+
+from functions import add_todo, complete_todo, display_todo_list, edit_todo
+
+now = strftime("%B %Y %H:%M:%S")
+print("It's", now)
 
 
 def main():
@@ -12,7 +17,7 @@ def main():
             add_todo(todo)
 
         elif action.startswith(("show", "display")):
-            display_todos()
+            display_todo_list()
 
         elif action.startswith("exit"):
             break
