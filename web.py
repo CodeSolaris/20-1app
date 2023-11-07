@@ -27,5 +27,6 @@ for index, todo in enumerate(todo_list):
 
 
 new_todo_input = st.text_input(
-    "Add a new todo", key="new_todo", help="Add a new todo to your list"
+    "Add a new todo", key="new_todo", help="Add a new todo to your list",
+    on_change=add_to_webapp_todolist
 )

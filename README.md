@@ -1,7 +1,7 @@
 # 20-1app
-# To-Do List Application
+## To-Do List Application
 
-This is a simple command-line to-do list application implemented in Python.
+This is a to-do list application implemented in Python with web, CLI, and desktop versions.
 
 ## Features
 
@@ -11,11 +11,13 @@ This is a simple command-line to-do list application implemented in Python.
 - Complete a task in the to-do list
 - Exit the application
 
-## Prerequisites
+## Getting Started
+
+### Prerequisites
 
 - Python 3.x
 
-## Usage
+### Installation
 
 1. Clone the repository:
 
